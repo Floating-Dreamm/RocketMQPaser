@@ -72,6 +72,7 @@ public class NamesrvStartup {
         System.setProperty(RemotingCommand.REMOTING_VERSION_KEY, Integer.toString(MQVersion.CURRENT_VERSION));
         //PackageConflictDetect.detectFastjson();
 
+        //启动参数
         Options options = ServerUtil.buildCommandlineOptions(new Options());
         commandLine = ServerUtil.parseCmdLine("mqnamesrv", args, buildCommandlineOptions(options), new PosixParser());
         if (null == commandLine) {
@@ -79,6 +80,7 @@ public class NamesrvStartup {
             return null;
         }
 
+        //-c configFile    --listenPort 9876
         final NamesrvConfig namesrvConfig = new NamesrvConfig();
         final NettyServerConfig nettyServerConfig = new NettyServerConfig();
         nettyServerConfig.setListenPort(9876);
@@ -165,7 +167,7 @@ public class NamesrvStartup {
         opt.setRequired(false);
         options.addOption(opt);
 
-        opt = new Option("p", "printConfigItem", false, "Print all config item");
+        opt = new Option("p", "printConfigItem", false, "Print all config items");
         opt.setRequired(false);
         options.addOption(opt);
 
