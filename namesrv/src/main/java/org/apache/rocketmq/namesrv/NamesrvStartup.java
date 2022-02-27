@@ -54,6 +54,7 @@ public class NamesrvStartup {
     public static NamesrvController main0(String[] args) {
 
         try {
+            //NameServer核心组件，主要读取配置信息
             NamesrvController controller = createNamesrvController(args);
             start(controller);
             String tip = "The Name Server boot success. serializeType=" + RemotingCommand.getSerializeTypeConfigInThisServer();
@@ -80,10 +81,12 @@ public class NamesrvStartup {
             return null;
         }
 
-        //-c configFile    --listenPort 9876
+        //为NamesrvController创建入参
         final NamesrvConfig namesrvConfig = new NamesrvConfig();
         final NettyServerConfig nettyServerConfig = new NettyServerConfig();
         nettyServerConfig.setListenPort(9876);
+
+        //-c configFile  指定配置文件  --listenPort 9876
         if (commandLine.hasOption('c')) {
             String file = commandLine.getOptionValue('c');
             if (file != null) {
@@ -100,6 +103,7 @@ public class NamesrvStartup {
             }
         }
 
+        //-p 指定属性
         if (commandLine.hasOption('p')) {
             InternalLogger console = InternalLoggerFactory.getLogger(LoggerName.NAMESRV_CONSOLE_NAME);
             MixAll.printObjectProperties(console, namesrvConfig);
@@ -145,6 +149,7 @@ public class NamesrvStartup {
             System.exit(-3);
         }
 
+        //注册服务关闭钩子
         Runtime.getRuntime().addShutdownHook(new ShutdownHookThread(log, new Callable<Void>() {
             @Override
             public Void call() throws Exception {

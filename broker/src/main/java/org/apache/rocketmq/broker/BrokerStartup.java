@@ -58,6 +58,11 @@ public class BrokerStartup {
         start(createBrokerController(args));
     }
 
+    /**
+     * broker核心组件
+     * @param controller
+     * @return
+     */
     public static BrokerController start(BrokerController controller) {
         try {
 
@@ -107,6 +112,7 @@ public class BrokerStartup {
                 System.exit(-1);
             }
 
+            //组装4个broker的核心配置对象
             final BrokerConfig brokerConfig = new BrokerConfig();
             final NettyServerConfig nettyServerConfig = new NettyServerConfig();
             final NettyClientConfig nettyClientConfig = new NettyClientConfig();
@@ -211,6 +217,7 @@ public class BrokerStartup {
             MixAll.printObjectProperties(log, nettyClientConfig);
             MixAll.printObjectProperties(log, messageStoreConfig);
 
+            //broker核心组件
             final BrokerController controller = new BrokerController(
                 brokerConfig,
                 nettyServerConfig,
@@ -225,6 +232,7 @@ public class BrokerStartup {
                 System.exit(-3);
             }
 
+            //注册关闭钩子
             Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
                 private volatile boolean hasShutdown = false;
                 private AtomicInteger shutdownTimes = new AtomicInteger(0);

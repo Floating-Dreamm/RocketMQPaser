@@ -81,6 +81,7 @@ public class NamesrvController {
         //创建NettyServer网络处理对象
         this.remotingServer = new NettyRemotingServer(this.nettyServerConfig, this.brokerHousekeepingService);
 
+        //初始化remotingServer
         this.remotingExecutor =
             Executors.newFixedThreadPool(nettyServerConfig.getServerWorkerThreads(), new ThreadFactoryImpl("RemotingExecutorThread_"));
 
@@ -156,6 +157,10 @@ public class NamesrvController {
         }
     }
 
+    /**
+     * 启动remotingServer
+     * @throws Exception
+     */
     public void start() throws Exception {
         this.remotingServer.start();
 
