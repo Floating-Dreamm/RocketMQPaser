@@ -128,6 +128,7 @@ public class CommitLog {
     public void start() {
         this.flushCommitLogService.start();
 
+        //是否开启对外内存
         if (defaultMessageStore.getMessageStoreConfig().isTransientStorePoolEnable()) {
             this.commitLogService.start();
         }
