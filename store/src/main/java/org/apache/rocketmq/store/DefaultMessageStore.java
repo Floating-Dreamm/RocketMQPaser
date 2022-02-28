@@ -2025,6 +2025,7 @@ public class DefaultMessageStore implements MessageStore {
 
             while (!this.isStopped()) {
                 try {
+                    //消息分发，从CommitLog分发到comsumequeue和indexFile
                     Thread.sleep(1);
                     this.doReput();
                 } catch (Exception e) {
